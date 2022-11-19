@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +24,6 @@ public class HiringPartnerDto {
     @NotNull
     private Double StartPrice;
     private Double price;
+    private Timestamp creationTime;
     private boolean isActive = true;
 }

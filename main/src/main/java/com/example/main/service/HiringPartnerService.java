@@ -1,9 +1,9 @@
 package com.example.main.service;
 
 import com.example.main.dto.HiringPartnerDto;
+import com.example.main.dto.ResponseDto;
 import com.example.main.entity.HiringPartner;
 import com.example.main.mapper.HiringPartnerMapper;
-import com.example.main.model.ResMessage;
 import com.example.main.repo.HiringPartnerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,28 +32,28 @@ public class HiringPartnerService {
             } }return hiringPartnerDtos;
     }
 
-    public ResMessage getById(Integer id) {
+    public ResponseDto getById(Integer id) {
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
         if(hp.isPresent()){
-            return ResMessage.getSuccess(hp);
-        }return ResMessage.getSuccess(300, "id is invalid");
+            return ResponseDto.getSuccess(hp);
+        }return ResponseDto.getSuccess(300, "id is invalid");
     }
 
-    public ResMessage update(Integer id, HiringPartnerDto hiringPartnerDto){
+    public ResponseDto update(Integer id, HiringPartnerDto hiringPartnerDto){
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
         if(hp.isPresent()){
-            return ResMessage.getSuccess(hiringPartnerRepo.save(HiringPartnerMapper.toEntity(hiringPartnerDto)));
-        }return ResMessage.getSuccess(300, "not updated");
+            return ResponseDto.getSuccess(hiringPartnerRepo.save(HiringPartnerMapper.toEntity(hiringPartnerDto)));
+        }return ResponseDto.getSuccess(300, "not updated");
     }
 
-    public ResMessage deleteById(Integer id) {
+    public ResponseDto deleteById(Integer id) {
 
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
         if(hp.isPresent()){
             hp.get().setActive(false);
 
-            return ResMessage.getSuccess(200, "deleted");
+            return ResponseDto.getSuccess(200, "deleted");
 
-        }return ResMessage.getSuccess(300, "not found");
+        }return ResponseDto.getSuccess(300, "not found");
     }
 }
