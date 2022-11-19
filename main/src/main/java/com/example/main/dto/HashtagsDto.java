@@ -1,22 +1,20 @@
-package com.example.main.entity;
+package com.example.main.dto;
 
+import com.example.main.entity.Hiring;
+import com.example.main.entity.HiringPartner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hashtags {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class HashtagsDto {
     private Integer id;
+    @NotBlank(message = "Name is mandatory")
     private String name;
-    @ManyToOne
     private HiringPartner hiringPartner;
-    @ManyToOne
     private Hiring hiring;
 }

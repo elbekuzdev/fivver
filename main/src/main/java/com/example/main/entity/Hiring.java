@@ -1,8 +1,15 @@
 package com.example.main.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Hiring {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,4 +22,5 @@ public class Hiring {
     private Users user;
     private Double StartPrice;
     private Double price;
+    private Boolean isActive = true;
 }

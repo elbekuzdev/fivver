@@ -20,6 +20,7 @@ public class Users {
     private String lastname;
     private String profession;
     private String summary;
+    private String password;
     @ManyToOne
     private Region region;
     @ManyToOne
