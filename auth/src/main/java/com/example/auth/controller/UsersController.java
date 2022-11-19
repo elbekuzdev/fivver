@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/register")
+@RequestMapping("/auth")
 public class UsersController {
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("register")
     public ResMessage registerUser(@RequestBody UsersDto usersDto){
         ResMessage register = userService.register(usersDto);
         return register;
     }
+
 }
