@@ -1,27 +1,27 @@
-package com.example.main.entity;
+package com.example.main.dto;
 
+
+import com.example.main.entity.State;
+import com.example.main.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class HiringPartner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class HiringPartnerDto {
     private Integer id;
+    @NotNull
     private String title;
+    @NotNull
     private String  description;
-    @Enumerated(EnumType.STRING)
     private State state;
-    @ManyToOne
     private Users user;
+    @NotNull
     private Double StartPrice;
     private Double price;
     private boolean isActive = true;
-
 }

@@ -1,23 +1,20 @@
-package com.example.main.entity;
+package com.example.main.dto;
 
+import com.example.main.entity.HiringPartner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotNull;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Partner {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PartnerDto {
     private Integer id;
+    @NotNull
     private String profession;
     private byte count;
-    @ManyToOne
     private HiringPartner hiringPartner;
     private boolean isActive = true;
 }
