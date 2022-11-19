@@ -6,6 +6,7 @@ import com.example.main.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class PartnerController {
     }
 
     @PostMapping
-    public ResponseDto save(@RequestBody PartnerDto partnerDto) {
+    public ResponseDto save(@Valid@RequestBody PartnerDto partnerDto) {
         boolean save = partnerService.addPartner(partnerDto);
         if (save) {
             return ResponseDto.getSuccess(200, "saved");
@@ -37,7 +38,7 @@ public class PartnerController {
     }
 
     @PutMapping
-    public ResponseDto update(@PathVariable Integer id, @RequestBody PartnerDto partnerDto){
+    public ResponseDto update(@PathVariable Integer id, @Valid@RequestBody PartnerDto partnerDto){
         return partnerService.update(id, partnerDto);
 
     }

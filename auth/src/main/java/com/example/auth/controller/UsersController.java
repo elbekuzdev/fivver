@@ -20,7 +20,7 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public ResMessage loginUser(@Valid@RequestParam String email, @RequestParam String password){
+    public ResMessage loginUser(@Valid@RequestParam String email, @Valid@RequestParam String password){
         return userService.loginUser(email,password);
     }
 

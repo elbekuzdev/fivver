@@ -6,6 +6,7 @@ import com.example.auth.entity.Region;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.validation.constraints.Email;
@@ -23,6 +24,8 @@ public class UsersDto {
     @NotBlank(message = "Profession is mandatory")
     private String profession;
     private String summary;
+    @Length(min = 8)
+    private String password;
     private Region region;
     private District district;
     @ValidatePhoneNumber
