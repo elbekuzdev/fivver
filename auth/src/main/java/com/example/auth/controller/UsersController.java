@@ -4,10 +4,7 @@ import com.example.auth.dto.UsersDto;
 import com.example.auth.model.ResMessage;
 import com.example.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +14,12 @@ public class UsersController {
 
     @PostMapping("register")
     public ResMessage registerUser(@RequestBody UsersDto usersDto){
-        ResMessage register = userService.register(usersDto);
-        return register;
+        return userService.register(usersDto);
+    }
+
+    @PostMapping("/login")
+    public ResMessage loginUser(@RequestParam String email, @RequestParam String password){
+        return userService.loginUser(email,password);
     }
 
 }
