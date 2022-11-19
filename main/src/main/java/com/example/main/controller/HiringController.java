@@ -19,7 +19,7 @@ public class HiringController {
     private final HiringService hiringService;
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseDto> save(@RequestBody @Valid HiringDto hiringDto) {
+    public ResponseEntity<ResponseDto> save(@Valid@RequestBody HiringDto hiringDto) {
         return hiringService.save(hiringDto);
     }
 
@@ -34,7 +34,7 @@ public class HiringController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<ResponseDto> update(@PathVariable Integer id, @RequestBody HiringDto hiringDto) {
+    public ResponseEntity<ResponseDto> update(@PathVariable Integer id, @Valid@RequestBody HiringDto hiringDto) {
         return hiringService.update(id, hiringDto);
     }
 

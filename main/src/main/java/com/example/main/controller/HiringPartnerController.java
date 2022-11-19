@@ -7,6 +7,7 @@ import com.example.main.service.HiringPartnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class HiringPartnerController {
     private final HiringPartnerService hiringPartnerService;
 
     @PostMapping
-    public ResponseDto save(@RequestBody HiringPartnerDto hiringpartnerDto) {
+    public ResponseDto save(@Valid @RequestBody HiringPartnerDto hiringpartnerDto) {
         boolean save = hiringPartnerService.addPartner(hiringpartnerDto);
         if (save) {
             return ResponseDto.getSuccess(200, "saved");
@@ -36,7 +37,7 @@ public class HiringPartnerController {
     }
 
     @PutMapping
-    public ResponseDto update(@PathVariable Integer id, @RequestBody HiringPartnerDto hiringpartnerDto){
+    public ResponseDto update(@PathVariable Integer id, @Valid@RequestBody HiringPartnerDto hiringpartnerDto){
         return hiringPartnerService.update(id, hiringpartnerDto);
 
     }
