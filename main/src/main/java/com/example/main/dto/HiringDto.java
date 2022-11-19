@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,13 +19,12 @@ public class HiringDto {
     @NotBlank(message = "Title is mandatory")
     private String title;
     @NotBlank(message = "Description is mandatory")
-
     private String  description;
-    private State state;
+    private State state = State.WAITING;
     private Users user;
     @NotBlank(message = "Start price is mandatory")
-
     private Double StartPrice;
     private Double price;
+    private Timestamp creationTime;
     private boolean isActive = true;
 }

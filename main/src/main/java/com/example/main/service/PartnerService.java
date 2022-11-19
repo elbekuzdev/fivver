@@ -1,9 +1,9 @@
 package com.example.main.service;
 
 import com.example.main.dto.PartnerDto;
+import com.example.main.dto.ResponseDto;
 import com.example.main.entity.Partner;
 import com.example.main.mapper.PartnerMapper;
-import com.example.main.model.ResMessage;
 import com.example.main.repo.PartnerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,28 +33,28 @@ public class PartnerService {
         }return partnerDtos;
     }
 
-    public ResMessage getById(Integer id) {
+    public ResponseDto getById(Integer id) {
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
-            return ResMessage.getSuccess(hp);
-        }return ResMessage.getSuccess(300, "id is invalid");
+            return ResponseDto.getSuccess(hp);
+        }return ResponseDto.getSuccess(300, "id is invalid");
     }
 
-    public ResMessage update(Integer id, PartnerDto partnerDto){
+    public ResponseDto update(Integer id, PartnerDto partnerDto){
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
-            return ResMessage.getSuccess(partnerRepo.save(PartnerMapper.toEntity(partnerDto)));
-        }return ResMessage.getSuccess(300, "not updated");
+            return ResponseDto.getSuccess(partnerRepo.save(PartnerMapper.toEntity(partnerDto)));
+        }return ResponseDto.getSuccess(300, "not updated");
     }
 
-    public ResMessage deleteById(Integer id) {
+    public ResponseDto deleteById(Integer id) {
 
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
             hp.get().setActive(false);
-            return ResMessage.getSuccess(200, "deleted");
+            return ResponseDto.getSuccess(200, "deleted");
 
-        }return ResMessage.getSuccess(300, "not found");
+        }return ResponseDto.getSuccess(300, "not found");
     }
 
 

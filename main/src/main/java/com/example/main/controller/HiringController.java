@@ -2,13 +2,13 @@ package com.example.main.controller;
 
 import com.example.main.dto.HiringDto;
 import com.example.main.dto.ResponseDto;
-import com.example.main.repository.HiringRepo;
 import com.example.main.service.HiringService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/hiring")
@@ -19,7 +19,7 @@ public class HiringController {
     private final HiringService hiringService;
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseDto> save(@RequestBody HiringDto hiringDto) {
+    public ResponseEntity<ResponseDto> save(@RequestBody @Valid HiringDto hiringDto) {
         return hiringService.save(hiringDto);
     }
 
