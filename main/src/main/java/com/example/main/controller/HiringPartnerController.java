@@ -2,13 +2,12 @@ package com.example.main.controller;
 
 
 import com.example.main.dto.HiringPartnerDto;
-import com.example.main.dto.PartnerDto;
-import com.example.main.model.ResMessage;
+import com.example.main.dto.ResponseDto;
 import com.example.main.service.HiringPartnerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,33 +17,33 @@ public class HiringPartnerController {
     private final HiringPartnerService hiringPartnerService;
 
     @PostMapping
-    public ResMessage save(@RequestBody HiringPartnerDto hiringpartnerDto) {
+    public ResponseDto save(@Valid @RequestBody HiringPartnerDto hiringpartnerDto) {
         boolean save = hiringPartnerService.addPartner(hiringpartnerDto);
         if (save) {
-            return ResMessage.getSuccess(200, "saved");
+            return ResponseDto.getSuccess(200, "saved");
         }
-        return ResMessage.getSuccess(202, "not saved");
+        return ResponseDto.getSuccess(202, "not saved");
     }
 
     @GetMapping
-    public ResMessage getAll(){
+    public ResponseDto getAll(){
         List<HiringPartnerDto> all = hiringPartnerService.getAll();
-        return ResMessage.getSuccess(all);
+        return ResponseDto.getSuccess(all);
     }
 
     @GetMapping("{id}")
-    public ResMessage getById(@PathVariable Integer id){
+    public ResponseDto getById(@PathVariable Integer id){
         return hiringPartnerService.getById(id);
     }
 
     @PutMapping
-    public ResMessage update(@PathVariable Integer id,@RequestBody HiringPartnerDto hiringpartnerDto){
+    public ResponseDto update(@PathVariable Integer id, @Valid@RequestBody HiringPartnerDto hiringpartnerDto){
         return hiringPartnerService.update(id, hiringpartnerDto);
 
     }
 
     @DeleteMapping
-    public ResMessage delete(Integer id){
+    public ResponseDto delete(Integer id){
         return hiringPartnerService.deleteById(id);
     }
 

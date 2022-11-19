@@ -15,8 +15,7 @@ import java.util.Optional;
 public class UserService {
     private final UsersRepository usersRepository;
     public ResMessage register(UsersDto usersDto) {
-        Users users = UsersMapper.toEntity(usersDto);
-        Users save = usersRepository.save(users);
+        usersRepository.save(UsersMapper.toEntity(usersDto));
         return ResMessage.getSuccess(0,"200");
     }
 

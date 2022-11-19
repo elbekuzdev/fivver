@@ -1,12 +1,12 @@
 package com.example.main.controller;
 
 import com.example.main.dto.PartnerDto;
-import com.example.main.model.ResMessage;
+import com.example.main.dto.ResponseDto;
 import com.example.main.service.PartnerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,33 +18,33 @@ public class PartnerController {
 
 
     @GetMapping
-    public ResMessage getAll(){
+    public ResponseDto getAll(){
         List<PartnerDto> all = partnerService.getAll();
-        return ResMessage.getSuccess(all);
+        return ResponseDto.getSuccess(all);
     }
 
     @PostMapping
-    public ResMessage save(@RequestBody PartnerDto partnerDto) {
+    public ResponseDto save(@Valid@RequestBody PartnerDto partnerDto) {
         boolean save = partnerService.addPartner(partnerDto);
         if (save) {
-            return ResMessage.getSuccess(200, "saved");
+            return ResponseDto.getSuccess(200, "saved");
         }
-        return ResMessage.getSuccess(202, "not saved");
+        return ResponseDto.getSuccess(202, "not saved");
     }
 
     @GetMapping("{id}")
-    public ResMessage getById(@PathVariable Integer id){
+    public ResponseDto getById(@PathVariable Integer id){
         return partnerService.getById(id);
     }
 
     @PutMapping
-    public ResMessage update(@PathVariable Integer id,@RequestBody PartnerDto partnerDto){
+    public ResponseDto update(@PathVariable Integer id, @Valid@RequestBody PartnerDto partnerDto){
         return partnerService.update(id, partnerDto);
 
     }
 
     @DeleteMapping
-    public ResMessage delete(Integer id){
+    public ResponseDto delete(Integer id){
         return partnerService.deleteById(id);
     }
 
