@@ -8,6 +8,7 @@ import com.example.auth.repo.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,11 +21,14 @@ public class UserService {
     }
 
     public ResMessage getAll() {
-        return null;
+        List<Users> all = usersRepository.findAll();
+        return ResMessage.getSuccess(all);
     }
 
     public ResMessage getUserById(Integer id) {
-        return null;
+        Optional<Users> byId = usersRepository.findById(id);
+        Users users = byId.get();
+        return ResMessage.getSuccess(users);
     }
 
 
@@ -33,5 +37,9 @@ public class UserService {
         if (users.isPresent()){
             return ResMessage.getSuccess(users.get());
         }return ResMessage.UserNotFound();
+    }
+    public ResMessage deleteById(Integer id){
+        usersRepository.deleteById(id);
+        return ResMessage.getSuccess(200,"succesfully deleted");
     }
 }
