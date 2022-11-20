@@ -16,8 +16,8 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String profession;
     private String summary;
     private String password;
@@ -25,7 +25,9 @@ public class Users {
     private Region region;
     @ManyToOne
     private District district;
+    @Column(unique = true)
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
     private CommonsMultipartFile profilePicture;
 }

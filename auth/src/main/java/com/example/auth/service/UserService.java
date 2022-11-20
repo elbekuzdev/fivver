@@ -16,8 +16,13 @@ import java.util.Optional;
 public class UserService {
     private final UsersRepository usersRepository;
     public ResponseDto register(UsersDto usersDto) {
-        usersRepository.save(UsersMapper.toEntity(usersDto));
-        return ResponseDto.getSuccess(0,"200");
+        try {
+            usersRepository.save(UsersMapper.toEntity(usersDto));
+            return ResponseDto.getSuccess(200,"saved");
+        }catch (Exception e){
+            return ResponseDto.getSuccess(200,"not saved");
+        }
+
     }
 
     public ResponseDto getAll() {

@@ -24,6 +24,11 @@ public class UsersController {
         return userService.loginUser(email,password);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto deleteById(@PathVariable Integer id){
+        return userService.deleteById(id);
+    }
+
     @GetMapping("/all")
     public ResponseDto getall(){
         return userService.getAll();
@@ -32,9 +37,6 @@ public class UsersController {
     public ResponseDto getById(@RequestParam Integer id){
         return userService.getUserById(id);
     }
-    @DeleteMapping("/id")
-    public ResponseDto deleteById(@RequestParam Integer id){
-        return userService.deleteById(id);
-    }
+
 
 }
