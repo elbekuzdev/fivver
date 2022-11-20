@@ -4,6 +4,7 @@ import com.example.main.dto.HiringDto;
 import com.example.main.dto.ResponseDto;
 import com.example.main.entity.Hiring;
 import com.example.main.mapper.HiringMapper;
+import com.example.main.repo.HashtagRepo;
 import com.example.main.repo.HiringRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HiringService {
     private final HiringRepo hiringRepo;
+    private final HashtagRepo hashtagsRepo;
 
     public ResponseEntity<ResponseDto> save(HiringDto hiringDto) {
         try {
@@ -45,7 +47,9 @@ public class HiringService {
     public ResponseEntity<ResponseDto> update(Integer id, HiringDto hiringDto) {
         Optional<Hiring> byId = hiringRepo.findByIdAndIsActive(id, true);
         if (byId.isPresent()) {
-            return ResponseEntity.ok(new ResponseDto(200, "ok", hiringRepo.save(HiringMapper.toEntity(hiringDto))));
+            Hiring hiring = byId.get();
+            hashtagsRepo.saveAll(hiring.getTags());
+            return ResponseEntity.ok(new ResponseDto(200, "ok", hashtagsRepo));
         } else {
             return ResponseEntity.ok(new ResponseDto(404, "id not found", null));
         }

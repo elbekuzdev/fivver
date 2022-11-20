@@ -52,6 +52,7 @@ public class PartnerService {
 
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
+            partnerRepo.deleteById(id);
             return ResponseDto.getSuccess(200, "deleted");
 
         }return ResponseDto.getSuccess(300, "not found");
