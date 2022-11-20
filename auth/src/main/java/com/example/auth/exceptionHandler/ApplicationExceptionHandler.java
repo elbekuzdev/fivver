@@ -1,6 +1,6 @@
 package com.example.auth.exceptionHandler;
 
-import com.example.auth.model.ResMessage;
+import com.example.auth.dto.ResponseDto;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +11,7 @@ import javax.validation.UnexpectedTypeException;
 @ControllerAdvice
 public class ApplicationExceptionHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class, InvalidFormatException.class, UnexpectedTypeException.class})
-    public ResMessage methodValidException(Exception e){
-        return new ResMessage(-1, e.getMessage(), null);
+    public ResponseDto methodValidException(Exception e){
+        return new ResponseDto(-1, e.getMessage(), null);
     }
 }

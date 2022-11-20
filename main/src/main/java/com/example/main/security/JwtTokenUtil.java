@@ -16,13 +16,15 @@ import java.util.Map;
 public class JwtTokenUtil {
     @Value("${secret.key}")
     private String key;
+    @Value("${access.token.expiration.time}")
+    private long expirationTime;
 
     public String jwtGenerator(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder().setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+1000*60))
+                .setExpiration(new Date(new Date().getTime()+expirationTime))
                 .signWith(SignatureAlgorithm.HS256,key).compact();
     }
     public boolean checkExpireDate(String token){

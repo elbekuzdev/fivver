@@ -18,9 +18,9 @@ import javax.validation.constraints.NotBlank;
 public class UsersDto {
     private Integer Id;
     @NotBlank(message = "FirstName is mandatory")
-    private String firstName;
+    private String firstname;
     @NotBlank(message = "Lastname is mandatory")
-    private String lastName;
+    private String lastname;
     @NotBlank(message = "Profession is mandatory")
     private String profession;
     private String summary;
@@ -28,7 +28,7 @@ public class UsersDto {
     private String password;
     private Region region;
     private District district;
-    @ValidatePhoneNumber
+//    @ValidatePhoneNumber
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;
