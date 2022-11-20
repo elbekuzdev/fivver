@@ -24,4 +24,18 @@ public class UsersController {
         return userService.loginUser(email,password);
     }
 
+    @GetMapping("/all")
+    public ResMessage getall(){
+        return userService.getAll();
+    }
+    @GetMapping("/id")
+    public ResMessage getById(@RequestParam Integer id){
+        ResMessage userById = userService.getUserById(id);
+        return userById;
+    }
+    @DeleteMapping("/id")
+    public ResMessage deleteById(@RequestParam Integer id){
+        return userService.deleteById(id);
+    }
+
 }
