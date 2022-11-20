@@ -1,7 +1,7 @@
 package com.example.auth.controller;
 
 import com.example.auth.dto.UsersDto;
-import com.example.auth.model.ResMessage;
+import com.example.auth.dto.ResponseDto;
 import com.example.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,27 +14,26 @@ import javax.validation.Valid;
 public class UsersController {
     private final UserService userService;
 
-    @PostMapping("register")
-    public ResMessage registerUser(@Valid@RequestBody UsersDto usersDto){
+    @PostMapping("/register")
+    public ResponseDto registerUser(@Valid@RequestBody UsersDto usersDto){
         return userService.register(usersDto);
     }
 
     @PostMapping("/login")
-    public ResMessage loginUser(@Valid@RequestParam String email, @Valid@RequestParam String password){
+    public ResponseDto loginUser(@Valid@RequestParam String email, @Valid@RequestParam String password){
         return userService.loginUser(email,password);
     }
 
     @GetMapping("/all")
-    public ResMessage getall(){
+    public ResponseDto getall(){
         return userService.getAll();
     }
     @GetMapping("/id")
-    public ResMessage getById(@RequestParam Integer id){
-        ResMessage userById = userService.getUserById(id);
-        return userById;
+    public ResponseDto getById(@RequestParam Integer id){
+        return userService.getUserById(id);
     }
     @DeleteMapping("/id")
-    public ResMessage deleteById(@RequestParam Integer id){
+    public ResponseDto deleteById(@RequestParam Integer id){
         return userService.deleteById(id);
     }
 

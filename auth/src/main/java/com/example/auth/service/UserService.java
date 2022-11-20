@@ -3,7 +3,7 @@ package com.example.auth.service;
 import com.example.auth.dto.UsersDto;
 import com.example.auth.entity.Users;
 import com.example.auth.mapper.UsersMapper;
-import com.example.auth.model.ResMessage;
+import com.example.auth.dto.ResponseDto;
 import com.example.auth.repo.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,31 +15,31 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UsersRepository usersRepository;
-    public ResMessage register(UsersDto usersDto) {
+    public ResponseDto register(UsersDto usersDto) {
         usersRepository.save(UsersMapper.toEntity(usersDto));
-        return ResMessage.getSuccess(0,"200");
+        return ResponseDto.getSuccess(0,"200");
     }
 
-    public ResMessage getAll() {
+    public ResponseDto getAll() {
         List<Users> all = usersRepository.findAll();
-        return ResMessage.getSuccess(all);
+        return ResponseDto.getSuccess(all);
     }
 
-    public ResMessage getUserById(Integer id) {
+    public ResponseDto getUserById(Integer id) {
         Optional<Users> byId = usersRepository.findById(id);
         Users users = byId.get();
-        return ResMessage.getSuccess(users);
+        return ResponseDto.getSuccess(users);
     }
 
 
-    public ResMessage loginUser(String email, String password) {
+    public ResponseDto loginUser(String email, String password) {
         Optional<Users> users = usersRepository.findByEmailAndPassword(email, password);
         if (users.isPresent()){
-            return ResMessage.getSuccess(users.get());
-        }return ResMessage.UserNotFound();
+            return ResponseDto.getSuccess(users.get());
+        }return ResponseDto.UserNotFound();
     }
-    public ResMessage deleteById(Integer id){
+    public ResponseDto deleteById(Integer id){
         usersRepository.deleteById(id);
-        return ResMessage.getSuccess(200,"succesfully deleted");
+        return ResponseDto.getSuccess(200,"succesfully deleted");
     }
 }

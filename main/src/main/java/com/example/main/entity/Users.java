@@ -20,5 +20,5 @@ public class Users {
     private District district;
     private String phoneNumber;
     private String email;
-    private CommonsMultipartFile profilePicture;
+//    private CommonsMultipartFile profilePicture;
 }
