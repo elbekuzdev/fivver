@@ -9,6 +9,7 @@ public class UsersMapper {
         return new Users(usersDto.getId(),usersDto.getFirstName(),usersDto.getLastName(), usersDto.getPassword(), usersDto.getProfession(),
                 usersDto.getSummary(),usersDto.getRegion(),usersDto.getDistrict(),
                 usersDto.getPhoneNumber(),usersDto.getEmail(),usersDto.getProfilePicture());
+
     }
     public static UsersDto toDto(Users users){
         return new UsersDto(users.getId(),users.getFirstName(),users.getLastName(), users.getPassword(), users.getProfession(),
