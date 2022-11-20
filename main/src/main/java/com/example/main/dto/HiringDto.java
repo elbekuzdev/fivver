@@ -27,7 +27,7 @@ public class HiringDto {
     private State state = State.WAITING;
     private Users user;
     @NotNull(message = "Start price is mandatory")
-    private Double StartPrice;
+    private Double startPrice = 0.0;
     private Double price;
     private Set<HashTagDto> tags;
     private Timestamp creationTime;

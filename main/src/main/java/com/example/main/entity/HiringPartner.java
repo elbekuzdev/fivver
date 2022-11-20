@@ -21,16 +21,19 @@ public class HiringPartner {
     private String title;
     private String  description;
     @Enumerated(EnumType.STRING)
-    private State state;
+    private State state = State.WAITING;
     @ManyToOne
     private Users user;
-    private Double StartPrice;
+    private Double StartPrice = 0.0;
     private Double price;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Partner> partners;
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Hashtag> tags;
     @CreationTimestamp
     private Timestamp creationTime;
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
 }

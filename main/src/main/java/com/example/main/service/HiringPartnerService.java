@@ -17,43 +17,47 @@ import java.util.Optional;
 public class HiringPartnerService {
     private final HiringPartnerRepo hiringPartnerRepo;
 
-    public boolean addPartner(HiringPartnerDto hiringPartnerDto) {
+    public ResponseDto addPartner(HiringPartnerDto hiringPartnerDto) {
         HiringPartner hiringPartner = HiringPartnerMapper.toEntity(hiringPartnerDto);
         HiringPartner save = hiringPartnerRepo.save(hiringPartner);
-        return save.getId() > 0;
+        if (save.getId() > 0 ){
+            return ResponseDto.getSuccess(200, "saved");
+        }
+        return ResponseDto.getSuccess(202, "not saved");
     }
 
-    public List<HiringPartnerDto> getAll() {
-        List<HiringPartner> all = hiringPartnerRepo.findAll();
-        List<HiringPartnerDto> hiringPartnerDtos = new LinkedList<>();
-        for (HiringPartner hp :all) {
-            if(hp.isActive()) {
-                hiringPartnerDtos.add(HiringPartnerMapper.toDto(hp));
-            } }return hiringPartnerDtos;
+    public List<HiringPartner> getAll() {
+
+
+        return hiringPartnerRepo.findByIsActive(true);
     }
 
     public ResponseDto getById(Integer id) {
-        Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
-        if(hp.isPresent()){
+        Optional<HiringPartner> hp = hiringPartnerRepo.findByIsActiveAndId(true, id);
+        if (hp.isPresent()) {
             return ResponseDto.getSuccess(hp);
-        }return ResponseDto.getSuccess(300, "id is invalid");
+        }
+        return ResponseDto.getSuccess(300, "id is invalid");
     }
 
-    public ResponseDto update(Integer id, HiringPartnerDto hiringPartnerDto){
+    public ResponseDto update(Integer id, HiringPartnerDto hiringPartnerDto) {
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
-        if(hp.isPresent()){
+        if (hp.isPresent()) {
             return ResponseDto.getSuccess(hiringPartnerRepo.save(HiringPartnerMapper.toEntity(hiringPartnerDto)));
-        }return ResponseDto.getSuccess(300, "not updated");
+        }
+        return ResponseDto.getSuccess(300, "not updated");
     }
 
     public ResponseDto deleteById(Integer id) {
 
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
-        if(hp.isPresent()){
-            hp.get().setActive(false);
-
+        if (hp.isPresent()) {
+            HiringPartner hiringPartner = hp.get();
+            hiringPartner.setIsActive(false);
+            hiringPartnerRepo.save(hiringPartner);
             return ResponseDto.getSuccess(200, "deleted");
 
-        }return ResponseDto.getSuccess(300, "not found");
+        }
+        return ResponseDto.getSuccess(300, "not found");
     }
 }

@@ -25,7 +25,7 @@ public class Hiring {
     private State state;
     @ManyToOne
     private Users user;
-    private Double StartPrice;
+    private Double startPrice;
     private Double price;
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

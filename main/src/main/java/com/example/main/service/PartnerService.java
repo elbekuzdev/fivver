@@ -41,6 +41,7 @@ public class PartnerService {
     }
 
     public ResponseDto update(Integer id, PartnerDto partnerDto){
+        partnerDto.setId(id);
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
             return ResponseDto.getSuccess(partnerRepo.save(PartnerMapper.toEntity(partnerDto)));
@@ -51,7 +52,6 @@ public class PartnerService {
 
         Optional<Partner> hp = partnerRepo.findById(id);
         if(hp.isPresent()){
-            hp.get().setActive(false);
             return ResponseDto.getSuccess(200, "deleted");
 
         }return ResponseDto.getSuccess(300, "not found");
