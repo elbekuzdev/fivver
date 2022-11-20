@@ -17,7 +17,5 @@ public class Partner {
     private Integer id;
     private String profession;
     private byte count;
-    @ManyToOne
-    private HiringPartner hiringPartner;
-    private boolean isActive = true;
+   
 }

@@ -1,5 +1,6 @@
 package com.example.main.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,8 +25,11 @@ public class Hiring {
     private State state;
     @ManyToOne
     private Users user;
-    private Double StartPrice;
+    private Double startPrice;
     private Double price;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Hashtag> tags;
     @CreationTimestamp
     private Timestamp creationTime;
     private Boolean isActive = true;

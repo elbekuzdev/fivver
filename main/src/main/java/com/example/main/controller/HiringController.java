@@ -15,7 +15,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class HiringController {
 
-    @Autowired
     private final HiringService hiringService;
 
     @PostMapping("/add")
@@ -33,12 +32,12 @@ public class HiringController {
         return hiringService.getById(id);
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ResponseDto> update(@PathVariable Integer id, @Valid@RequestBody HiringDto hiringDto) {
         return hiringService.update(id, hiringDto);
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<ResponseDto> delete(@PathVariable Integer id) {
         return hiringService.deleteById(id);
     }

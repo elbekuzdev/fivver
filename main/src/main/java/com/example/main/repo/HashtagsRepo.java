@@ -1,10 +1,10 @@
 package com.example.main.repo;
 
-import com.example.main.entity.Hashtags;
+import com.example.main.entity.Hashtag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HashtagsRepo extends JpaRepository<Hashtags, Integer> {
+public interface HashtagsRepo extends JpaRepository<Hashtag, Integer> {
 
 }

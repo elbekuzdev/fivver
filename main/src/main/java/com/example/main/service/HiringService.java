@@ -54,8 +54,9 @@ public class HiringService {
     public ResponseEntity<ResponseDto> deleteById(Integer id) {
         Optional<Hiring> byIdAndActive = hiringRepo.findByIdAndIsActive(id, true);
         if (byIdAndActive.isPresent()) {
-//            byIdAndActive.get().setActive(false);
-            byIdAndActive.get().setIsActive(false);
+            Hiring hiring = byIdAndActive.get();
+            hiring.setIsActive(false);
+            hiringRepo.save(hiring);
             return ResponseEntity.ok(new ResponseDto(200, "deleted", null));
         } else {
             return ResponseEntity.ok(new ResponseDto(200, "id not found", null));
