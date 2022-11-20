@@ -4,11 +4,12 @@ import com.example.main.dto.HiringPartnerDto;
 import com.example.main.dto.ResponseDto;
 import com.example.main.entity.HiringPartner;
 import com.example.main.mapper.HiringPartnerMapper;
+import com.example.main.repo.HashtagRepo;
 import com.example.main.repo.HiringPartnerRepo;
+import com.example.main.repo.PartnerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HiringPartnerService {
     private final HiringPartnerRepo hiringPartnerRepo;
+    private final PartnerRepo partnerRepo;
+    private final HashtagRepo hashtagsRepo;
 
     public ResponseDto addPartner(HiringPartnerDto hiringPartnerDto) {
         HiringPartner hiringPartner = HiringPartnerMapper.toEntity(hiringPartnerDto);
@@ -43,7 +46,10 @@ public class HiringPartnerService {
     public ResponseDto update(Integer id, HiringPartnerDto hiringPartnerDto) {
         Optional<HiringPartner> hp = hiringPartnerRepo.findById(id);
         if (hp.isPresent()) {
-            return ResponseDto.getSuccess(hiringPartnerRepo.save(HiringPartnerMapper.toEntity(hiringPartnerDto)));
+            HiringPartner hiringPartner = HiringPartnerMapper.toEntity(hiringPartnerDto);
+            hashtagsRepo.saveAll(hiringPartner.getTags());
+            partnerRepo.saveAll(hiringPartner.getPartners());
+            return ResponseDto.getSuccess(hiringPartnerRepo.save(hiringPartner));
         }
         return ResponseDto.getSuccess(300, "not updated");
     }

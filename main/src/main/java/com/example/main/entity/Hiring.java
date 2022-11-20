@@ -31,6 +31,7 @@ public class Hiring {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Hashtag> tags;
     @CreationTimestamp
+    @Column(updatable = false)
     private Timestamp creationTime;
     private Boolean isActive = true;
 }

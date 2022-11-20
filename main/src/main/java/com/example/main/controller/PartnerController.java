@@ -15,39 +15,16 @@ import java.util.List;
 public class PartnerController {
 
     private final PartnerService partnerService;
-
-
-    @GetMapping
-    public ResponseDto getAll(){
-        List<PartnerDto> all = partnerService.getAll();
-        return ResponseDto.getSuccess(all);
-    }
-
-    @PostMapping
-    public ResponseDto save(@Valid@RequestBody PartnerDto partnerDto) {
-        boolean save = partnerService.addPartner(partnerDto);
-        if (save) {
-            return ResponseDto.getSuccess(200, "saved");
-        }
-        return ResponseDto.getSuccess(202, "not saved");
-    }
-
-    @GetMapping("{id}")
-    public ResponseDto getById(@PathVariable Integer id){
-        return partnerService.getById(id);
-    }
-
-    @PutMapping
+    @PutMapping("/update/{id}")
     public ResponseDto update(@PathVariable Integer id, @Valid@RequestBody PartnerDto partnerDto){
+        partnerDto.setId(id);
         return partnerService.update(id, partnerDto);
-
     }
 
-    @DeleteMapping
-    public ResponseDto delete(Integer id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto delete(@PathVariable Integer id){
         return partnerService.deleteById(id);
     }
-
 
 
     }
