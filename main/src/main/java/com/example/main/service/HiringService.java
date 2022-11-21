@@ -2,6 +2,7 @@ package com.example.main.service;
 
 import com.example.main.dto.HiringDto;
 import com.example.main.dto.ResponseDto;
+import com.example.main.entity.Hashtag;
 import com.example.main.entity.Hiring;
 import com.example.main.mapper.HiringMapper;
 import com.example.main.repo.HashtagRepo;
@@ -10,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -45,11 +44,24 @@ public class HiringService {
     }
 
     public ResponseEntity<ResponseDto> update(Integer id, HiringDto hiringDto) {
-        Optional<Hiring> byId = hiringRepo.findByIdAndIsActive(id, true);
-        if (byId.isPresent()) {
-            Hiring hiring = byId.get();
-            hashtagsRepo.saveAll(hiring.getTags());
-            return ResponseEntity.ok(new ResponseDto(200, "ok", hashtagsRepo));
+        Optional<Hiring> optionalHiring = hiringRepo.findByIdAndIsActive(id, true);
+        if (optionalHiring.isPresent()) {
+            Hiring hiring = optionalHiring.get();
+            Hiring requestHiring = HiringMapper.toEntity(hiringDto);
+            Set<Hashtag> tags = null;
+            if (requestHiring.getTags() != null) {
+                tags = requestHiring.getTags();
+
+            } else {
+                tags = new HashSet<>();
+            }
+            if (hiring.getTags() != null){
+                tags.addAll(hiring.getTags());
+            }
+            requestHiring.setTags(tags);
+            hashtagsRepo.saveAll(requestHiring.getTags());
+            Hiring save = hiringRepo.save(requestHiring);
+            return ResponseEntity.ok(new ResponseDto(200, "ok", save));
         } else {
             return ResponseEntity.ok(new ResponseDto(404, "id not found", null));
         }

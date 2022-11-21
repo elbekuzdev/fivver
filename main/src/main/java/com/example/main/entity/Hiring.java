@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -28,7 +27,7 @@ public class Hiring {
     private Double startPrice;
     private Double price;
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, orphanRemoval = true)
     private Set<Hashtag> tags;
     @CreationTimestamp
     @Column(updatable = false)
