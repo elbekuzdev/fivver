@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,8 +47,8 @@ public class UserService {
 
 
     public ResponseDto loginUser(String email, String password) {
-        Optional<Users> users = usersRepository.findByEmailAndPassword(email, password);
-        if (users.isPresent()){
+        Optional<Users> users = usersRepository.findByEmail(email);
+        if (users.isPresent() && passwordEncoder.matches(password,users.get().getPassword())){
             return ResponseDto.getSuccess(users.get());
         }return ResponseDto.UserNotFound();
     }
