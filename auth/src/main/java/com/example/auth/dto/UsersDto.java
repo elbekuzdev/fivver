@@ -28,7 +28,7 @@ public class UsersDto {
     private String password;
     private Region region;
     private District district;
-    @ValidatePhoneNumber(message = "PhoneNumber is not valid")
+    @ValidatePhoneNumber( message = "PhoneNumber is not valid")
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;
