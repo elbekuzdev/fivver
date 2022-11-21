@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/main/token")
 @RequiredArgsConstructor
 public class TokenController {
     private final TokenService tokenService;

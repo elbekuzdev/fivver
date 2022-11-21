@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/partner")
+@RequestMapping("/main/partner")
 @RequiredArgsConstructor
 public class PartnerController {
 

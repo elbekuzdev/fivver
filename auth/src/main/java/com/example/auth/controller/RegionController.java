@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/region")
+@RequestMapping("/sign/region")
 public class RegionController {
 
     private final RegionService regionService;

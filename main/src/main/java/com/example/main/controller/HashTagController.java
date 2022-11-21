@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.criteria.CriteriaBuilder;
 
 @RestController
-@RequestMapping("/hashtag")
+@RequestMapping("/main/hashtag")
 @RequiredArgsConstructor
 public class HashTagController {
     private final HashTagService hashTagService;
