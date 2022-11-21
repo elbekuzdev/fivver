@@ -6,6 +6,11 @@ import com.example.auth.mapper.UsersMapper;
 import com.example.auth.dto.ResponseDto;
 import com.example.auth.repo.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +19,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
+
+    private final PasswordEncoder passwordEncoder;
     private final UsersRepository usersRepository;
     public ResponseDto register(UsersDto usersDto) {
         try {
+            usersDto.setPassword(passwordEncoder.encode(usersDto.getPassword()));
             usersRepository.save(UsersMapper.toEntity(usersDto));
             return ResponseDto.getSuccess(200,"saved");
         }catch (Exception e){
@@ -38,8 +47,8 @@ public class UserService {
 
 
     public ResponseDto loginUser(String email, String password) {
-        Optional<Users> users = usersRepository.findByEmailAndPassword(email, password);
-        if (users.isPresent()){
+        Optional<Users> users = usersRepository.findByEmail(email);
+        if (users.isPresent() && passwordEncoder.matches(password,users.get().getPassword())){
             return ResponseDto.getSuccess(users.get());
         }return ResponseDto.UserNotFound();
     }
