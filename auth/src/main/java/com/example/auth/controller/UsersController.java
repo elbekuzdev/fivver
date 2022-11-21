@@ -5,12 +5,13 @@ import com.example.auth.dto.ResponseDto;
 import com.example.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/sign/auth")
 public class UsersController {
     private final UserService userService;
 
@@ -27,15 +28,6 @@ public class UsersController {
     @DeleteMapping("/delete/{id}")
     public ResponseDto deleteById(@PathVariable Integer id){
         return userService.deleteById(id);
-    }
-
-    @GetMapping("/all")
-    public ResponseDto getall(){
-        return userService.getAll();
-    }
-    @GetMapping("/id")
-    public ResponseDto getById(@RequestParam Integer id){
-        return userService.getUserById(id);
     }
 
 

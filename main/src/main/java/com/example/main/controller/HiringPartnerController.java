@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/hiringPartner")
+@RequestMapping("/main/hiringPartner")
 @RestController
 public class HiringPartnerController {
     private final HiringPartnerService hiringPartnerService;
