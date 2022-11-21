@@ -13,5 +13,6 @@ import java.util.List;
 @Repository
 public interface DistrictRepo extends JpaRepository<District,Integer> {
     List<District> findByRegionId(int regionId);
+    boolean findByIdAndName(Integer id,String name);
 
 }

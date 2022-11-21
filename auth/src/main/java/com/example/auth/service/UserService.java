@@ -4,6 +4,8 @@ import com.example.auth.dto.UsersDto;
 import com.example.auth.entity.Users;
 import com.example.auth.mapper.UsersMapper;
 import com.example.auth.dto.ResponseDto;
+import com.example.auth.repo.DistrictRepo;
+import com.example.auth.repo.RegionRepo;
 import com.example.auth.repo.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,33 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UsersRepository usersRepository;
+    private final RegionRepo regionRepo;
+    private final DistrictRepo districtRepo;
     public ResponseDto register(UsersDto usersDto) {
         try {
             usersDto.setPassword(passwordEncoder.encode(usersDto.getPassword()));
-            usersRepository.save(UsersMapper.toEntity(usersDto));
-            return ResponseDto.getSuccess(200,"saved");
-        }catch (Exception e){
-            return ResponseDto.getSuccess(200,"not saved");
-        }
+            Users users = usersRepository.save(UsersMapper.toEntity(usersDto));
+        if (users != null){
+            if (users.getPassword().length()>=6){
 
+                boolean region = regionRepo.findRegionByIdAndName(users.getRegion().getId(), users.getRegion().getName());
+                boolean district = districtRepo.findByIdAndName(users.getDistrict().getId(), users.getDistrict().getName());
+
+                if (region && district){
+                    Users save = usersRepository.save(users);
+                    return ResponseDto.getSuccess(200,"User is succesfully saved");
+                }else {
+                    return ResponseDto.getSuccess(555,"region or district is invalid");
+                }
+            }else {
+                return ResponseDto.getSuccess(555,"username or password is invalid");
+            }
+        }else {
+            return ResponseDto.getSuccess(555,"User is invalid");
+        }
+            }catch (Exception e){
+                return ResponseDto.getSuccess(200,"not saved");
+        }
     }
 
     public ResponseDto getAll() {
