@@ -38,6 +38,7 @@ public class UserService {
                 boolean district = districtRepo.findByIdAndName(users.getDistrict().getId(), users.getDistrict().getName());
 
                 if (region && district){
+
                     Users save = usersRepository.save(users);
                     return ResponseDto.getSuccess(200,"User is succesfully saved");
                 }else {
