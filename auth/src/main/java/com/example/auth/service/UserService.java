@@ -89,7 +89,7 @@ public class UserService {
 
 
     public ResponseDto loginUser(String email, String password) {
-        Optional<Users> users = usersRepo.findByEmail(email);
+        Optional<Users> users = usersRepo.findByEmailAndIsactive(email,true);
         if (users.isPresent() && passwordEncoder.matches(password,users.get().getPassword())){
             return ResponseDto.getSuccess(users.get());
         }return ResponseDto.UserNotFound();
