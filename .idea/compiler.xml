@@ -10,8 +10,8 @@
         <module name="main" />
         <module name="fivver" />
         <module name="auth" />
-        <module name="eureka" />
         <module name="gateway" />
+        <module name="eureka" />
       </profile>
     </annotationProcessing>
   </component>
