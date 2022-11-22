@@ -29,6 +29,7 @@ public class Users implements UserDetails {
     private District district;
     private String phoneNumber;
     private String email;
+    private Boolean isactive = true;
     private CommonsMultipartFile profilePicture;
 
     @Override
