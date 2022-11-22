@@ -1,6 +1,8 @@
 package com.example.auth.service;
 
 import com.example.auth.dto.UsersDto;
+import com.example.auth.entity.District;
+import com.example.auth.entity.Region;
 import com.example.auth.entity.Users;
 import com.example.auth.mapper.UsersMapper;
 import com.example.auth.dto.ResponseDto;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -29,29 +32,51 @@ public class UserService {
     private final DistrictRepo districtRepo;
     public ResponseDto register(UsersDto usersDto) {
         try {
-            usersDto.setPassword(passwordEncoder.encode(usersDto.getPassword()));
-            Users users = usersRepository.save(UsersMapper.toEntity(usersDto));
-        if (users != null){
-            if (users.getPassword().length()>=6){
+            Users user = UsersMapper.toEntity(usersDto);
+            if (!usersRepository.existsByEmail(user.getEmail())){
+                String phoneNumber = user.getPhoneNumber();
+                if (!usersRepository.existsByPhoneNumber(phoneNumber)){
 
-                boolean region = regionRepo.findRegionByIdAndName(users.getRegion().getId(), users.getRegion().getName());
-                boolean district = districtRepo.findByIdAndName(users.getDistrict().getId(), users.getDistrict().getName());
 
-                if (region && district){
+                    if (user.getDistrict() != null && user.getRegion() != null){
+                        Optional<District> optionalDistrict = districtRepo.findById(user.getDistrict().getId());
+                        if (optionalDistrict.isPresent()){
+                            District district = optionalDistrict.get();
+                            Optional<Region> optionalRegion = regionRepo.findById(user.getRegion().getId());
+                            if (optionalRegion.isPresent()){
+                                Region region = optionalRegion.get();
+                                if (Objects.equals(district.getRegion().getId(), region.getId())){
+                                    try {
+                                        Users save = usersRepository.save(user);
+                                        return new ResponseDto(200, "saved", save);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                        return ResponseDto.getSuccess(205, "not saved");
 
-                    Users save = usersRepository.save(users);
-                    return ResponseDto.getSuccess(200,"User is succesfully saved");
-                }else {
-                    return ResponseDto.getSuccess(555,"region or district is invalid");
+                                    }
+
+                                }else {
+                                    return ResponseDto.getSuccess(205, "district not attributed to region");
+                                }
+                            }else{
+                                return ResponseDto.getSuccess(205, "region not found");
+                            }
+                        }else{
+                            return ResponseDto.getSuccess(205,"district not found");
+                        }
+                    }else{
+                        return ResponseDto.getSuccess(205, "region or district is invalid");
+                    }
+
+                }else{
+                    return ResponseDto.getSuccess(205, "phone number is already is eixsts");
                 }
-            }else {
-                return ResponseDto.getSuccess(555,"username or password is invalid");
+            }else{
+                return ResponseDto.getSuccess(205, "email is already is exists");
             }
-        }else {
-            return ResponseDto.getSuccess(555,"User is invalid");
-        }
-            }catch (Exception e){
-                return ResponseDto.getSuccess(200,"not saved");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseDto.getSuccess(205, "not saved");
         }
     }
 
