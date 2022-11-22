@@ -17,6 +17,7 @@ public class UsersMapper {
                 usersDto.getDistrict(),
                 usersDto.getPhoneNumber(),
                 usersDto.getEmail(),
+                usersDto.getIsactive(),
                 usersDto.getProfilePicture());
     }
 
@@ -32,6 +33,7 @@ public class UsersMapper {
                 users.getDistrict(),
                 users.getPhoneNumber(),
                 users.getEmail(),
+                users.getIsactive(),
                 users.getProfilePicture());
     }
 }

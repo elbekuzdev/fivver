@@ -29,5 +29,6 @@ public class Users {
     private String phoneNumber;
     @Column(unique = true)
     private String email;
+    private Boolean isactive = true;
     private CommonsMultipartFile profilePicture;
 }
