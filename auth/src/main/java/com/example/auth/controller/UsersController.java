@@ -30,5 +30,10 @@ public class UsersController {
         return userService.deleteById(id);
     }
 
+    @PutMapping("/update")
+    public ResponseDto update(@RequestBody UsersDto usersDto){
+        return userService.update(usersDto);
+    }
+
 
 }
