@@ -32,7 +32,6 @@ public class UsersDto {
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;
-    private Boolean isactive;
     private CommonsMultipartFile profilePicture;
 
 }

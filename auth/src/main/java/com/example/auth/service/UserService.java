@@ -8,9 +8,13 @@ import com.example.auth.mapper.UsersMapper;
 import com.example.auth.dto.ResponseDto;
 import com.example.auth.repo.DistrictRepo;
 import com.example.auth.repo.RegionRepo;
-import com.example.auth.repo.UsersRepo;
+import com.example.auth.repo.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,15 +27,15 @@ public class UserService {
 
 
     private final PasswordEncoder passwordEncoder;
-    private final UsersRepo usersRepo;
+    private final UsersRepository usersRepository;
     private final RegionRepo regionRepo;
     private final DistrictRepo districtRepo;
     public ResponseDto register(UsersDto usersDto) {
         try {
             Users user = UsersMapper.toEntity(usersDto);
-            if (!usersRepo.existsByEmail(user.getEmail())){
+            if (!usersRepository.existsByEmail(user.getEmail())){
                 String phoneNumber = user.getPhoneNumber();
-                if (!usersRepo.existsByPhoneNumber(phoneNumber)){
+                if (!usersRepository.existsByPhoneNumber(phoneNumber)){
 
 
                     if (user.getDistrict() != null && user.getRegion() != null){
@@ -43,7 +47,7 @@ public class UserService {
                                 Region region = optionalRegion.get();
                                 if (Objects.equals(district.getRegion().getId(), region.getId())){
                                     try {
-                                        Users save = usersRepo.save(user);
+                                        Users save = usersRepository.save(user);
                                         return new ResponseDto(200, "saved", save);
                                     }catch (Exception e){
                                         e.printStackTrace();
@@ -77,32 +81,25 @@ public class UserService {
     }
 
     public ResponseDto getAll() {
-        List<Users> all = usersRepo.findAllByIsactive(true);
+        List<Users> all = usersRepository.findAll();
         return ResponseDto.getSuccess(all);
     }
 
     public ResponseDto getUserById(Integer id) {
-        Optional<Users> byId = usersRepo.findById(id);
+        Optional<Users> byId = usersRepository.findById(id);
         Users users = byId.get();
         return ResponseDto.getSuccess(users);
     }
 
 
     public ResponseDto loginUser(String email, String password) {
-        Optional<Users> users = usersRepo.findByEmailAndIsactive(email,true);
+        Optional<Users> users = usersRepository.findByEmail(email);
         if (users.isPresent() && passwordEncoder.matches(password,users.get().getPassword())){
             return ResponseDto.getSuccess(users.get());
         }return ResponseDto.UserNotFound();
     }
-
     public ResponseDto deleteById(Integer id){
-        Optional<Users> optionalUsers = usersRepo.findById(id);
-        if (optionalUsers.isPresent()){
-            Users users = optionalUsers.get();
-            users.setIsactive(false);
-            usersRepo.save(users);
-            return ResponseDto.getSuccess(200,"User deleted");
-        }
-        return ResponseDto.UserNotFound();
+        usersRepository.deleteById(id);
+        return ResponseDto.getSuccess(200,"succesfully deleted");
     }
 }
