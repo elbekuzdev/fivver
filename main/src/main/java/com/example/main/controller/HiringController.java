@@ -6,6 +6,7 @@ import com.example.main.service.HiringService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,11 +18,13 @@ public class HiringController {
 
     private final HiringService hiringService;
 
+//    @PreAuthorize("hasAnyAuthority('CREATE')")
     @PostMapping("/add")
     public ResponseEntity<ResponseDto> save(@Valid@RequestBody HiringDto hiringDto) {
         return hiringService.save(hiringDto);
     }
 
+//    @PreAuthorize("hasAnyAuthority('READ')")
     @GetMapping("/getAll")
     public ResponseEntity<ResponseDto> getAll() {
         return hiringService.getAll();
