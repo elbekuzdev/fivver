@@ -46,6 +46,7 @@ public class Users implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = permissions.stream().map(p -> new SimpleGrantedAuthority(p.getPermissionName()))
                 .collect(Collectors.toSet());
+        System.out.println(authorities);
         return authorities;
     }
 
