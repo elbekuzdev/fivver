@@ -35,5 +35,7 @@ public class UsersDto {
     private String email;
     private Set<LinksDto> links;
     private CommonsMultipartFile profilePicture;
+    private Boolean isVerify=false;
+
 
 }

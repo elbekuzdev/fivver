@@ -4,9 +4,13 @@ import com.example.auth.dto.UsersDto;
 import com.example.auth.dto.ResponseDto;
 import com.example.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @RestController

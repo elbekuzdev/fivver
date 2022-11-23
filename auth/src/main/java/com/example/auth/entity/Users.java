@@ -35,4 +35,5 @@ public class Users {
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, orphanRemoval = true)
     private Set<Links> links;
     private CommonsMultipartFile profilePicture;
+    private Boolean isVerify=false;
 }
