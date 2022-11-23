@@ -18,13 +18,12 @@ public class HiringController {
 
     private final HiringService hiringService;
 
-//    @PreAuthorize("hasAnyAuthority('CREATE')")
+    @PreAuthorize("hasAnyRole('CREATE')")
     @PostMapping("/add")
     public ResponseEntity<ResponseDto> save(@Valid@RequestBody HiringDto hiringDto) {
         return hiringService.save(hiringDto);
     }
 
-//    @PreAuthorize("hasAnyAuthority('READ')")
     @GetMapping("/getAll")
     public ResponseEntity<ResponseDto> getAll() {
         return hiringService.getAll();
@@ -35,11 +34,13 @@ public class HiringController {
         return hiringService.getById(id);
     }
 
+    @PreAuthorize("hasAnyRole('UPDATE')")
     @PutMapping("/update/{id}")
     public ResponseEntity<ResponseDto> update(@PathVariable Integer id, @Valid@RequestBody HiringDto hiringDto) {
         return hiringService.update(id, hiringDto);
     }
 
+    @PreAuthorize("hasAnyRole('DELETE')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ResponseDto> delete(@PathVariable Integer id) {
         return hiringService.deleteById(id);
