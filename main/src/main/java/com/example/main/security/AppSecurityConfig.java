@@ -44,9 +44,9 @@ public class AppSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-//                .authorizeRequests().antMatchers("/token/accessToken","/token/refreshToken").permitAll()
-                .authorizeRequests().anyRequest().permitAll();
-//                .anyRequest().authenticated();
+                .authorizeRequests().antMatchers("/token/accessToken","/token/refreshToken").permitAll()
+//                .authorizeRequests().anyRequest().permitAll();
+                .anyRequest().authenticated();
         return http.build();
     }
 }

@@ -86,7 +86,6 @@ public class UserService {
             return ResponseDto.getSuccess(205, "not saved");
         }
     }
-
     public ResponseDto getAll() {
         List<Users> all = usersRepository.findAll();
         return ResponseDto.getSuccess(all);
@@ -139,7 +138,7 @@ public class UserService {
                                     Users save = user;
                                     try {
                                         save = usersRepository.save(user);
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     return new ResponseDto(200, "ok", save);

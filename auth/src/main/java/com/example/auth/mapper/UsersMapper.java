@@ -17,7 +17,7 @@ public class UsersMapper {
                 usersDto.getPhoneNumber(),
                 usersDto.getEmail(),
                 LinksMapper.toEntity(usersDto.getLinks()),
-                usersDto.getProfilePicture());
+                ImageMapper.toEntity(usersDto.getProfilePicture()));
     }
 
     public static UsersDto toDto(Users users) {
@@ -33,6 +33,6 @@ public class UsersMapper {
                 users.getPhoneNumber(),
                 users.getEmail(),
                 LinksMapper.toDto(users.getLinks()),
-                users.getProfilePicture());
+                ImageMapper.toDto(users.getProfilePicture()));
     }
 }
