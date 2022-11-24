@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="metro@localhost" uuid="d8d0134e-011e-4681-91ae-0e85f32cdcaf">
+    <data-source source="LOCAL" name="fivver@107.22.71.96" uuid="16df905c-407c-4289-8fb3-f395aa997f97">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/metro</jdbc-url>
+      <jdbc-url>jdbc:postgresql://107.22.71.96:5432/fivver</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="060aa467-b759-4a67-9737-396baf15dd8b">
+    <data-source source="LOCAL" name="postgres@localhost" uuid="0c95498d-f3a0-4ddf-8f5f-4e80d2b58eaa">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="fivver@54.221.15.51" uuid="213aa37d-014f-48dc-b018-aeca53ca6379">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://54.221.15.51:5432/fivver</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
