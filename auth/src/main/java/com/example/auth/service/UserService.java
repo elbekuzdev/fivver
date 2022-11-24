@@ -12,6 +12,9 @@ import com.example.auth.repo.LinksRepo;
 import com.example.auth.repo.RegionRepo;
 import com.example.auth.repo.UsersRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +22,7 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
 
     private final PasswordEncoder passwordEncoder;
@@ -117,68 +120,107 @@ public class UserService {
     }
 
     public ResponseDto update(UsersDto usersDto) {
-        {
-            System.out.println(usersDto.getLinks());
-            Users user = UsersMapper.toEntity(usersDto);
-            System.out.println(user.getLinks());
-            if (user.getDistrict() != null && user.getRegion() != null) {
-                Optional<District> optionalDistrict = districtRepo.findById(user.getDistrict().getId());
-                if (optionalDistrict.isPresent()) {
-                    District district = optionalDistrict.get();
-                    Optional<Region> optionalRegion = regionRepo.findById(user.getRegion().getId());
-                    if (optionalRegion.isPresent()) {
-                        Region region = optionalRegion.get();
-                        if (Objects.equals(district.getRegion().getId(), region.getId())) {
-                            try {
-                                Optional<Users> optionalUser = usersRepo.findById(usersDto.getId());
-                                if (optionalUser.isPresent()) {
-                                    Users users = optionalUser.get();
-                                    Set<Links> links = null;
-                                    if (user.getLinks() != null) {
-                                        links = user.getLinks();
-                                    } else {
-                                        links = new HashSet<>();
-                                    }
-                                    if (users.getLinks() != null) {
-                                        links.addAll(users.getLinks());
-                                    }
-                                    user.setLinks(links);
-
-                                    user.setPassword(passwordEncoder.encode(user.getPassword()));
-                                    linksRepo.saveAll(links);
-                                    Users save = user;
-                                    try {
-
-                                        save = usersRepo.save(user);
-                                    } catch (Exception e){
-
-                                        e.printStackTrace();
-                                    }
-                                    return new ResponseDto(200, "ok", save);
-
-                                } else {
-                                    return ResponseDto.getSuccess(205, "user not found");
-                                }
 
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                return ResponseDto.getSuccess(205, "not saved");
+        Users user = UsersMapper.toEntity(usersDto);
+        Optional<Users> users = usersRepository.findById(user.getId());
+        if (users.isPresent()) {
+            Users users1 = users.get();
+            if (user.getFirstname() == null) {
+                user.setFirstname(users1.getFirstname());
+            }
+            if (user.getLastname() == null) {
+                user.setFirstname(users1.getFirstname());
+            }
+            if (user.getProfession() == null) {
+                user.setProfession(users1.getProfession());
+            }
+            if (user.getSummary() == null) {
+                user.setSummary(users1.getSummary());
+            }
+            if (user.getPassword() == null) {
+                user.setPassword(users1.getPassword());
+            }
+            if (user.getRegion() == null) {
+                user.setRegion(users1.getRegion());
+            } else { // agar region almashtirsa aniq tuman almashtirshi kere, ushanga elseda tumanniyam tekshiraman
+                if (user.getDistrict() != null) {
+                    Optional<District> optionalDistrict = districtRepo.findById(user.getDistrict().getId());
+                    if (optionalDistrict.isPresent()) {
+                        District district = optionalDistrict.get();
+                        Optional<Region> optionalRegion = regionRepo.findById(user.getRegion().getId());
+                        if (optionalRegion.isPresent()) {
+                            Region region = optionalRegion.get();
+                            if (Objects.equals(district.getRegion().getId(), region.getId())) {
+                                user.setDistrict(district);
+                                user.setRegion(region);
+                            } else {
+                                return ResponseDto.getSuccess(205, "District not found");
                             }
-
                         } else {
-                            return ResponseDto.getSuccess(205, "district not attributed to region");
+                            return ResponseDto.getSuccess(205, "Region not found");
+                        }
+                    }
+                }
+                return ResponseDto.getSuccess(205, "Choose the District!");
+
+
+            }
+      
+
+            if (user.getDistrict() == null) {
+                user.setDistrict(users1.getDistrict());
+            } else {
+
+                //* maqsad agar district ozgarmoqchi bosa, tekshiradi,
+                // viloyatti ichida bormi bunaqa district, bomasa yo didi bosa set qiladi
+                Optional<District> byId = districtRepo.findById(user.getDistrict().getId());
+                if (byId.isPresent()) {
+                    District district = byId.get();
+                    Optional<Region> regionOptional = regionRepo.findById(user.getRegion().getId());
+                    if (regionOptional.isPresent()) {
+                        Region region = regionOptional.get();
+
+                        if (Objects.equals(district.getRegion().getId(), region.getId())) {
+                            user.setDistrict(district);
+                        } else {
+                            return ResponseDto.getSuccess(205, "District not found");
                         }
                     } else {
-                        return ResponseDto.getSuccess(205, "region not found");
+                        return ResponseDto.getSuccess(205, "Region not found");
                     }
                 } else {
-                    return ResponseDto.getSuccess(205, "district not found");
+                    return ResponseDto.getSuccess(205, "District is invalid");
                 }
-            } else {
-                return ResponseDto.getSuccess(205, "region or district is invalid");
+
+                return ResponseDto.getSuccess(205, "User not found");
+
             }
 
-        }
+            if (user.getPhoneNumber() == null) {
+                user.setPhoneNumber(users1.getPhoneNumber());
+            }
+
+            if(user.getEmail()== null){
+                user.setEmail(users1.getEmail());
+         }
+            if(user.getLinks()==null){
+                user.setLinks(users1.getLinks());
+            }
+
+            if(user.getProfilePicture()==null){
+                user.setProfilePicture(users1.getProfilePicture());
+            }
+            usersRepository.save(user);
+            return ResponseDto.getSuccess(200, "updated");
+    }
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return usersRepo.findByEmailAndIsactive(email,true).orElseThrow(()->new UsernameNotFoundException("User not found"));
     }
 }
+
+
+
+}
+
