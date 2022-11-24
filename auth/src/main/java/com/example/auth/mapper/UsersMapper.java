@@ -17,6 +17,7 @@ public class UsersMapper {
                 usersDto.getPhoneNumber(),
                 usersDto.getEmail(),
                 LinksMapper.toEntity(usersDto.getLinks()),
+                usersDto.getIsactive(),
                 usersDto.getProfilePicture());
     }
 
@@ -33,6 +34,7 @@ public class UsersMapper {
                 users.getPhoneNumber(),
                 users.getEmail(),
                 LinksMapper.toDto(users.getLinks()),
+                users.getIsactive(),
                 users.getProfilePicture());
     }
 }

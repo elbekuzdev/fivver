@@ -34,6 +34,6 @@ public class UsersDto {
     @Email(message = "Email is not valid")
     private String email;
     private Set<LinksDto> links;
+    private Boolean isactive;
     private CommonsMultipartFile profilePicture;
-
 }

@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<Users,Integer> {
-    Optional<Users> findByEmail(String email);
+    Optional<Users> findByEmailAndIsactive(String email,Boolean isactive);
 }
