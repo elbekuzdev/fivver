@@ -1,0 +1,1 @@
+# Birinchi eureka ni run qilib keyin qolganlarini run qilish kerak, bo'lmasa run bo'lmaydi.

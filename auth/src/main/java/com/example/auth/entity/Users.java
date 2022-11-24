@@ -1,5 +1,6 @@
 package com.example.auth.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -29,6 +31,9 @@ public class Users {
     private String phoneNumber;
     @Column(unique = true)
     private String email;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, orphanRemoval = true)
+    private Set<Links> links;
     private Boolean isactive = true;
     private CommonsMultipartFile profilePicture;
 }

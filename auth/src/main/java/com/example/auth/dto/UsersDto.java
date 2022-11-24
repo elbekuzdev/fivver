@@ -11,6 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class UsersDto {
     private String phoneNumber;
     @Email(message = "Email is not valid")
     private String email;
+    private Set<LinksDto> links;
     private Boolean isactive;
     private CommonsMultipartFile profilePicture;
-
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -16,6 +17,16 @@ public class Links {
     private Integer id;
     private String name;
     private String url;
-    @ManyToOne
-    private Users user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        Links links = (Links) o;
+        return Objects.equals(name.toLowerCase(), links.name.toLowerCase());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name.toLowerCase());
+    }
 }

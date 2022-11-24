@@ -2,7 +2,6 @@ package com.example.auth.mapper;
 
 import com.example.auth.dto.UsersDto;
 import com.example.auth.entity.Users;
-import org.springframework.stereotype.Component;
 
 public class UsersMapper {
     public static Users toEntity(UsersDto usersDto) {
@@ -17,6 +16,7 @@ public class UsersMapper {
                 usersDto.getDistrict(),
                 usersDto.getPhoneNumber(),
                 usersDto.getEmail(),
+                LinksMapper.toEntity(usersDto.getLinks()),
                 usersDto.getIsactive(),
                 usersDto.getProfilePicture());
     }
@@ -33,6 +33,7 @@ public class UsersMapper {
                 users.getDistrict(),
                 users.getPhoneNumber(),
                 users.getEmail(),
+                LinksMapper.toDto(users.getLinks()),
                 users.getIsactive(),
                 users.getProfilePicture());
     }
