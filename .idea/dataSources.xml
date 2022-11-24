@@ -26,7 +26,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/library_2</jdbc-url>
-
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
