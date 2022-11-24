@@ -121,6 +121,7 @@ public class UserService implements UserDetailsService {
 
     public ResponseDto update(UsersDto usersDto) {
 
+
         Users user = UsersMapper.toEntity(usersDto);
         Optional<Users> users = usersRepository.findById(user.getId());
         if (users.isPresent()) {
@@ -162,6 +163,7 @@ public class UserService implements UserDetailsService {
                     }
                 }
                 return ResponseDto.getSuccess(205, "Choose the District!");
+
 
             }
       
