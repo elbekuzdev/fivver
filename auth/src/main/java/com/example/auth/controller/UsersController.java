@@ -29,6 +29,11 @@ public class UsersController {
     }
 
     @PreAuthorize("hasAnyRole('DELETE')")
+    @GetMapping("/getAll")
+    public ResponseDto getAll(){
+        return userService.getAll();
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseDto deleteById(@PathVariable Integer id){
         return userService.deleteById(id);

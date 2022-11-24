@@ -39,6 +39,8 @@ public class Users implements UserDetails {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, orphanRemoval = true)
     private Set<Links> links;
+    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    private Image profilePicture;
     private Boolean isactive = true;
     private CommonsMultipartFile profilePicture;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -103,4 +105,5 @@ public class Users implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
