@@ -15,6 +15,7 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+
     <data-source source="LOCAL" name="fivver@localhost" uuid="09eea117-1e4b-42ff-9ed9-e7ded3c161ef">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
@@ -27,6 +28,7 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/library_2</jdbc-url>
+
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
