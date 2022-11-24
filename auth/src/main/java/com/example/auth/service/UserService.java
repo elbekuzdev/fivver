@@ -1,14 +1,14 @@
 package com.example.auth.service;
 
+import com.example.auth.dto.ResponseDto;
 import com.example.auth.dto.UsersDto;
 import com.example.auth.entity.District;
 import com.example.auth.entity.Links;
 import com.example.auth.entity.Region;
 import com.example.auth.entity.Users;
 import com.example.auth.mapper.UsersMapper;
-import com.example.auth.dto.ResponseDto;
 import com.example.auth.repo.DistrictRepo;
-import com.example.auth.repo.LinksRepository;
+import com.example.auth.repo.LinksRepo;
 import com.example.auth.repo.RegionRepo;
 import com.example.auth.repo.UsersRepo;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class UserService {
     private final UsersRepo usersRepo;
     private final RegionRepo regionRepo;
     private final DistrictRepo districtRepo;
-    private final LinksRepository linksRepository;
+    private final LinksRepo linksRepo;
 
     public ResponseDto register(UsersDto usersDto) {
         try {
@@ -50,10 +50,10 @@ public class UserService {
                                             links = new HashSet<>();
                                         }
                                         user.setLinks(links);
-                                        linksRepository.saveAll(links);
+                                        linksRepo.saveAll(links);
                                         user.setPassword(passwordEncoder.encode(user.getPassword()));
                                         System.out.println(user.getLinks());
-                                        Users save = usersRepository.save(user);
+                                        Users save = usersRepo.save(user);
                                         return new ResponseDto(200, "ok", save);
                                     }catch (Exception e){
                                         e.printStackTrace();
@@ -131,7 +131,7 @@ public class UserService {
                         Region region = optionalRegion.get();
                         if (Objects.equals(district.getRegion().getId(), region.getId())) {
                             try {
-                                Optional<Users> optionalUser = usersRepository.findById(usersDto.getId());
+                                Optional<Users> optionalUser = usersRepo.findById(usersDto.getId());
                                 if (optionalUser.isPresent()) {
                                     Users users = optionalUser.get();
                                     Set<Links> links = null;
@@ -146,10 +146,10 @@ public class UserService {
                                     user.setLinks(links);
 
                                     user.setPassword(passwordEncoder.encode(user.getPassword()));
-                                    linksRepository.saveAll(links);
+                                    linksRepo.saveAll(links);
                                     Users save = user;
                                     try {
-                                        save = usersRepository.save(user);
+                                        save = usersRepo.save(user);
                                     }catch (Exception e){
                                         e.printStackTrace();
                                     }
