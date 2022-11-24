@@ -4,9 +4,7 @@ import com.example.auth.dto.ResponseDto;
 import com.example.auth.entity.Image;
 import com.example.auth.entity.Users;
 import com.example.auth.repo.ImageRepo;
-import com.example.auth.repo.UsersRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.example.auth.repo.UsersRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
@@ -25,7 +22,7 @@ import java.util.zip.Inflater;
 @RequiredArgsConstructor
 public class ImageService {
     private final ImageRepo imageRepo;
-    private final UsersRepository usersRepository;
+    private final UsersRepo usersRepository;
 
     public ResponseDto uploadImage(MultipartFile file, int userId) throws IOException {
         Optional<Users> optionalUser = usersRepository.findById(userId);

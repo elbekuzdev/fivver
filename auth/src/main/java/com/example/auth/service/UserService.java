@@ -149,7 +149,7 @@ public class UserService {
                                     Users save = user;
                                     try {
 
-                                        save = usersRepository.save(user);
+                                        save = usersRepo.save(user);
                                     } catch (Exception e){
 
                                         e.printStackTrace();
