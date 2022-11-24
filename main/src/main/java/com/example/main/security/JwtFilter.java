@@ -1,5 +1,6 @@
 package com.example.main.security;
 
+import com.example.main.dto.ResponseDto;
 import com.example.main.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +26,21 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("Authorization");
         String email =null;
-        if (token !=null && token.startsWith("Bearer ")){
+        if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
             try {
                 email = jwtTokenUtil.getEmailFromJwt(token);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Not Valid");
-            }catch (ExpiredJwtException e){
+            } catch (ExpiredJwtException e) {
                 System.out.println("Expired JWT token");
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Something wrong");
             }
-            if (email !=null && jwtTokenUtil.checkExpireDate(token) && SecurityContextHolder.getContext().getAuthentication()==null){
+            if (email != null && jwtTokenUtil.checkExpireDate(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null, userDetails.getAuthorities());
+                System.out.println(userDetails.getAuthorities() + " HEllo");
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }

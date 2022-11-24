@@ -34,5 +34,8 @@ public class Users {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, orphanRemoval = true)
     private Set<Links> links;
-    private CommonsMultipartFile profilePicture;
+    @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    private Image profilePicture;
+    private Boolean isactive = true;
+
 }
