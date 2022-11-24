@@ -42,7 +42,6 @@ public class Users implements UserDetails {
     @OneToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
     private Image profilePicture;
     private Boolean isactive = true;
-    private CommonsMultipartFile profilePicture;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Permissions> permissions;
 
@@ -63,7 +62,6 @@ public class Users implements UserDetails {
         this.email = email;
         this.links = links;
         this.isactive = isactive;
-        this.profilePicture = profilePicture;
     }
 
     @Override

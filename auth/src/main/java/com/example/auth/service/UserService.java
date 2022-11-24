@@ -34,10 +34,10 @@ public class UserService implements UserDetailsService {
     public ResponseDto register(UsersDto usersDto) {
         try {
             Users user = UsersMapper.toEntity(usersDto);
-            if (!usersRepo.existsByEmail(user.getEmail())){
+            if (!usersRepo.existsByEmail(user.getEmail())) {
                 String phoneNumber = user.getPhoneNumber();
-                if (!usersRepo.existsByPhoneNumber(phoneNumber)){
-                    if (user.getDistrict() != null && user.getRegion() != null){
+                if (!usersRepo.existsByPhoneNumber(phoneNumber)) {
+                    if (user.getDistrict() != null && user.getRegion() != null) {
                         Optional<District> optionalDistrict = districtRepo.findById(user.getDistrict().getId());
                         if (optionalDistrict.isPresent()) {
                             District district = optionalDistrict.get();
@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
                                         System.out.println(user.getLinks());
                                         Users save = usersRepo.save(user);
                                         return new ResponseDto(200, "ok", save);
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                         return ResponseDto.getSuccess(205, "not saved");
                                     }
@@ -87,6 +87,7 @@ public class UserService implements UserDetailsService {
             return ResponseDto.getSuccess(205, "not saved");
         }
     }
+
     public ResponseDto getAll() {
         List<Users> all = usersRepo.findAllByIsactive(true);
         return ResponseDto.getSuccess(all);
@@ -101,20 +102,20 @@ public class UserService implements UserDetailsService {
 
 
     public ResponseDto loginUser(String email, String password) {
-        Optional<Users> users = usersRepo.findByEmailAndIsactive(email,true);
-        if (users.isPresent() && passwordEncoder.matches(password,users.get().getPassword())){
+        Optional<Users> users = usersRepo.findByEmailAndIsactive(email, true);
+        if (users.isPresent() && passwordEncoder.matches(password, users.get().getPassword())) {
             return ResponseDto.getSuccess(users.get());
         }
         return ResponseDto.UserNotFound();
     }
 
-    public ResponseDto deleteById(Integer id){
+    public ResponseDto deleteById(Integer id) {
         Optional<Users> optionalUsers = usersRepo.findById(id);
-        if (optionalUsers.isPresent()){
+        if (optionalUsers.isPresent()) {
             Users users = optionalUsers.get();
             users.setIsactive(false);
             usersRepo.save(users);
-            return ResponseDto.getSuccess(200,"User deleted");
+            return ResponseDto.getSuccess(200, "User deleted");
         }
         return ResponseDto.UserNotFound();
     }
@@ -123,7 +124,7 @@ public class UserService implements UserDetailsService {
 
 
         Users user = UsersMapper.toEntity(usersDto);
-        Optional<Users> users = usersRepository.findById(user.getId());
+        Optional<Users> users = usersRepo.findById(user.getId());
         if (users.isPresent()) {
             Users users1 = users.get();
             if (user.getFirstname() == null) {
@@ -166,7 +167,7 @@ public class UserService implements UserDetailsService {
 
 
             }
-      
+
 
             if (user.getDistrict() == null) {
                 user.setDistrict(users1.getDistrict());
@@ -201,26 +202,25 @@ public class UserService implements UserDetailsService {
                 user.setPhoneNumber(users1.getPhoneNumber());
             }
 
-            if(user.getEmail()== null){
+            if (user.getEmail() == null) {
                 user.setEmail(users1.getEmail());
-         }
-            if(user.getLinks()==null){
+            }
+            if (user.getLinks() == null) {
                 user.setLinks(users1.getLinks());
             }
 
-            if(user.getProfilePicture()==null){
+            if (user.getProfilePicture() == null) {
                 user.setProfilePicture(users1.getProfilePicture());
             }
-            usersRepository.save(user);
+            usersRepo.save(user);
             return ResponseDto.getSuccess(200, "updated");
+        }
+        return ResponseDto.UserNotFound();
     }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return usersRepo.findByEmailAndIsactive(email,true).orElseThrow(()->new UsernameNotFoundException("User not found"));
+        return usersRepo.findByEmailAndIsactive(email, true).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
-}
-
-
-
 }
 
