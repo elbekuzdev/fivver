@@ -84,7 +84,6 @@ public class UserService {
             return ResponseDto.getSuccess(205, "not saved");
         }
     }
-
     public ResponseDto getAll() {
         List<Users> all = usersRepo.findAllByIsactive(true);
         return ResponseDto.getSuccess(all);
@@ -149,8 +148,10 @@ public class UserService {
                                     linksRepo.saveAll(links);
                                     Users save = user;
                                     try {
-                                        save = usersRepo.save(user);
-                                    }catch (Exception e){
+
+                                        save = usersRepository.save(user);
+                                    } catch (Exception e){
+
                                         e.printStackTrace();
                                     }
                                     return new ResponseDto(200, "ok", save);
